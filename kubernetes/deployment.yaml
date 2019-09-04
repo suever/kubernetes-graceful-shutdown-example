@@ -1,23 +1,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: myapp
+  name: graceful-shutdown
+  namespace: graceful-shutdown
 spec:
-  replicas: 10
+  replicas: 1
   # Update pods with rolling update
   strategy:
     rollingUpdate:
       maxSurge: 1
-      maxUnavailable: 1
+      maxUnavailable: 0
     type: RollingUpdate
   template:
     metadata:
       labels:
-        app: myapp
+        app: graceful-shutdown
     spec:
+      imagePullPolicy: Always
       containers:
-      - name: myapp
-        image: trace.risingstack.com/myapp:v1
+      - name: app
+        image: quay.io/tenjin/graceful-shutdown:latest
         # ReadinessProbe: indicates whether the container is ready to service requests.
         # If the ReadinessProbe fails, the endpoints controller will remove the
         # pod’s IP address from the endpoints of all services that match the pod.

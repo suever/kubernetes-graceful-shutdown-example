@@ -16,9 +16,9 @@ spec:
       labels:
         app: graceful-shutdown
     spec:
-      imagePullPolicy: Always
       containers:
       - name: app
+        imagePullPolicy: Always
         image: quay.io/tenjin/graceful-shutdown:latest
         # ReadinessProbe: indicates whether the container is ready to service requests.
         # If the ReadinessProbe fails, the endpoints controller will remove the
